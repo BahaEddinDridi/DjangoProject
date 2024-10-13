@@ -1,0 +1,15 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold text-center mb-4">Delete Exercise</h2>
+    <p class="mb-4 text-gray-700">Are you sure you want to delete the exercise: <strong>{{ exercise.name }}</strong>?</p>
+    <form id="deleteForm" action="{% url 'exercise_delete' exercise.id %}" method="POST" class="mt-4">
+        {% csrf_token %}
+        <div class="flex justify-center">
+            <button type="submit" class="bg-red-600 text-white py-2 px-6 rounded hover:bg-red-700 transition duration-300">Delete</button>
+            <a href="{% url 'exercise_list' %}" class="ml-4 inline-block py-2 px-6 rounded border border-gray-300 hover:bg-gray-100 transition duration-300">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

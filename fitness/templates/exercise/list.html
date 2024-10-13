@@ -1,0 +1,33 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <h2 class="text-3xl font-bold mb-4">Exercise List</h2>
+    <table class="min-w-full bg-white border rounded-lg shadow-md">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="py-2 px-4 border text-left">Name</th>
+                <th class="py-2 px-4 border text-left">Description</th>
+                <th class="py-2 px-4 border text-left">Category</th>
+                <th class="py-2 px-4 border text-left">Muscles Targeted</th>
+                <th class="py-2 px-4 border text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exercise in exercises %}
+            <tr class="hover:bg-gray-50">
+                <td class="py-2 px-4 border">{{ exercise.name }}</td>
+                <td class="py-2 px-4 border">{{ exercise.description }}</td>
+                <td class="py-2 px-4 border">{{ exercise.category }}</td>
+                <td class="py-2 px-4 border">{{ exercise.muscles_targeted }}</td>
+                <td class="py-2 px-4 border">
+                    <a href="{% url 'exercise_edit' exercise.id %}" class="text-blue-600 hover:underline">Edit</a>
+                    <a href="{% url 'exercise_delete' exercise.id %}" class="text-red-600 hover:underline">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'exercise_add' %}" class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300">Add New Exercise</a>
+</div>
+{% endblock %}

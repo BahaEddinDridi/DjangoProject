@@ -1,0 +1,33 @@
+{% extends 'base/index.html' %}
+
+{% block content %}
+<div class="max-w-lg mx-auto mt-10">
+    <h2 class="text-3xl font-bold text-center mb-6">Add Exercise</h2>
+    <form action="{% url 'exercise_add' %}" method="POST" class="bg-white p-8 rounded-lg shadow-lg">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" id="name" name="name" required
+                class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea id="description" name="description" required
+                class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent"></textarea>
+        </div>
+        <div class="mb-4">
+            <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+            <input type="text" id="category" name="category" required
+                class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+        </div>
+        <div class="mb-4">
+            <label for="muscles_targeted" class="block text-sm font-medium text-gray-700">Muscles Targeted</label>
+            <input type="text" id="muscles_targeted" name="muscles_targeted" required
+                class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+        </div>
+        <button type="submit"
+            class="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300">Add Exercise</button>
+    </form>
+    <a href="{% url 'exercise_list' %}" class="mt-4 inline-block text-gray-600 hover:underline text-center">Back to Exercise List</a>
+</div>
+{% endblock %}
