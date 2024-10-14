@@ -42,4 +42,4 @@ def exercise_delete(request, exercise_id):
     return render(request, 'exercise/delete.html', {'exercise': exercise})
 
 def home(request):
-    return render(request, 'base/home.html')
+    return render(request, 'base_template/home.html')
