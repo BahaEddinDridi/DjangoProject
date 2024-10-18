@@ -1,29 +1,38 @@
-{% extends 'base/index.html' %}
+{% extends 'base_template/home.html' %}
 
 {% block content %}
-<div class="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-    <h2 class="text-3xl font-bold text-center mb-4">Edit Exercise</h2>
-    <form action="{% url 'exercise_edit' exercise.id %}" method="POST" class="mt-4">
-        {% csrf_token %}
-        <input type="hidden" name="_method" value="PUT">
-        <div class="mb-4">
-            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" id="name" name="name" value="{{ exercise.name }}" required class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+<!-- Edit Exercise Section -->
+<section class="class-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="class__form">
+                    <h2 class="text-center mb-4">Edit Exercise</h2>
+                    <form action="{% url 'exercise_edit' exercise.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="PUT">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" value="{{ exercise.name }}" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" required class="form-control">{{ exercise.description }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" id="category" name="category" value="{{ exercise.category }}" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="muscles_targeted">Muscles Targeted</label>
+                            <input type="text" id="muscles_targeted" name="muscles_targeted" value="{{ exercise.muscles_targeted }}" required class="form-control">
+                        </div>
+                        <button type="submit" class="primary-btn mt-3">Update Exercise</button>
+                    </form>
+                    <a href="{% url 'exercise_list' %}" class="btn btn-link mt-3">Back to Exercise List</a>
+                </div>
+            </div>
         </div>
-        <div class="mb-4">
-            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-            <textarea id="description" name="description" required class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">{{ exercise.description }}</textarea>
-        </div>
-        <div class="mb-4">
-            <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-            <input type="text" id="category" name="category" value="{{ exercise.category }}" required class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
-        </div>
-        <div class="mb-4">
-            <label for="muscles_targeted" class="block text-sm font-medium text-gray-700">Muscles Targeted</label>
-            <input type="text" id="muscles_targeted" name="muscles_targeted" value="{{ exercise.muscles_targeted }}" required class="mt-1 block w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
-        </div>
-        <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 transition duration-300">Update Exercise</button>
-    </form>
-    <a href="{% url 'exercise_list' %}" class="mt-4 inline-block text-gray-600 hover:underline text-center">Back to Exercise List</a>
-</div>
+    </div>
+</section>
 {% endblock %}
