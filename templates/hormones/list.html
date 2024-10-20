@@ -1,121 +1,99 @@
 {% extends 'base_template/home.html' %}
 
 {% block content %}
-<h1>Suivi des niveaux hormonaux</h1>
-<div class="add-hormone-level-btn">
-    <a href="{% url 'create_hormone_level' %}" class="btn btn-primary">
+<head>
+  
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</head>
+<h1 class="text-center mb-4">Suivi des niveaux hormonaux</h1>
+
+<div class="text-center mb-4">
+    <a href="{% url 'create_hormone_level' %}" class="btn btn-success">
         <i class="fa fa-plus"></i> Ajouter un niveau hormonal
     </a>
 </div>
 
-<div class="hormone-cards">
-    {% for level in levels %}
-    <div class="card">
-        <h2>{{ level.hormone_name }}</h2>
-        <p><strong>Niveau :</strong> {{ level.level }} {{ level.unit }}</p>
-        <p><strong>Date mesurée :</strong> {{ level.date_measured }}</p>
-        <div class="actions">
-            <a href="{% url 'update_hormone_level' level.id %}" class="edit-btn" aria-label="Modifier le niveau hormonal">
-                Modifier
-            </a>
-            <a href="{% url 'delete_hormone_level' level.id %}" class="delete-btn" aria-label="Supprimer le niveau hormonal" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce niveau hormonal ?')">
-                Supprimer
-            </a>
+<div class="container">
+    <div class="row">
+        {% for level in levels %}
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ level.hormone_name }}</h5>
+                    <p class="card-text"><strong>Niveau :</strong> {{ level.level }} {{ level.unit }}</p>
+                    <p class="card-text"><strong>Date mesurée :</strong> {{ level.date_measured }}</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'update_hormone_level' level.id %}" class="btn btn-primary me-2" aria-label="Modifier le niveau hormonal">
+                            <i class="fa fa-pencil-alt"></i> Modifier
+                        </a>
+                        <a href="{% url 'delete_hormone_level' level.id %}" class="btn btn-danger" aria-label="Supprimer le niveau hormonal" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce niveau hormonal ?')">
+                            <i class="fa fa-trash"></i> Supprimer
+                        </a>
+                    </div>
+                </div>
+            </div>
+<!-- Modal de confirmation -->
+<div class="modal fade" id="deleteModal{{ level.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmer la suppression</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer {{ level.hormone_name }} ?
+            </div>
+            <div class="modal-footer">
+                <form action="{% url 'delete_hormone_level' level.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
         </div>
     </div>
-    {% endfor %}
+</div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
 
+<!-- Ajout de styles personnalisés -->
 <style>
     /* Styles de base pour l'apparence */
     h1 {
-        text-align: center;
         margin-bottom: 20px;
     }
 
-    .add-hormone-level-btn {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .add-hormone-level-btn .btn {
-        background-color: #5cb85c; /* or your preferred color */
-        color: white;
-        padding: 12px 24px;
+    /* Personnaliser les boutons Bootstrap */
+    .btn-success {
         font-size: 16px;
+        padding: 12px 24px;
         border-radius: 8px;
-        text-decoration: none;
         transition: background-color 0.3s ease;
     }
 
-    .add-hormone-level-btn .btn:hover {
-        background-color: #4cae4c;
-        color: white;
-    }
-
-    .hormone-cards {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 20px;
+    .btn-success:hover {
+        background-color: #5cb85c;
     }
 
     .card {
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 300px;
-        padding: 20px;
-        text-align: center;
+        transition: transform 0.3s;
     }
 
-    .card h2 {
-        font-size: 1.5rem;
-        margin-bottom: 15px;
-    }
-
-    .card p {
-        font-size: 1rem;
-        margin: 10px 0;
-    }
-
-    .actions {
-        margin-top: 15px;
-    }
-
-    .actions a {
-        text-decoration: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        margin: 0 5px;
-        font-size: 14px;
-    }
-
-    .edit-btn {
-        background-color: #007BFF;
-        color: white;
-    }
-
-    .delete-btn {
-        background-color: #FF4136;
-        color: white;
-    }
-
-    .edit-btn:hover, .delete-btn:hover {
-        opacity: 0.9;
+    .card:hover {
+        transform: translateY(-5px);
     }
 
     /* Styles responsive */
     @media (max-width: 768px) {
-        .hormone-cards {
-            flex-direction: column;
-            align-items: center;
-        }
-
         .card {
             width: 100%;
             max-width: none;

@@ -2,17 +2,19 @@ from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
 from django.shortcuts import get_object_or_404, render
-# CREATE
+
 def create_hormone_level(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = HormoneLevelForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('list_hormone_levels')
+            hormone_level = form.save(commit=False)  # Ne pas enregistrer tout de suite
+            hormone_level.user = request.user  # Associer l'utilisateur connecté
+            hormone_level.save()  # Maintenant, sauvegarde l'objet
+            return redirect('list_hormone_levels')  # Rediriger vers une autre vue après la création
     else:
         form = HormoneLevelForm()
+    
     return render(request, 'hormones/create.html', {'form': form})
-
 # READ
 def list_hormone_levels(request):
     # Récupère tous les niveaux hormonaux, sans filtrer par utilisateur
@@ -20,21 +22,26 @@ def list_hormone_levels(request):
     return render(request, 'hormones/list.html', {'levels': levels})
 
 # UPDATE
-def update_hormone_level(request, id):
-    level = get_object_or_404(HormoneLevel, id=id)
-    if request.method == "POST":
-        form = HormoneLevelForm(request.POST, instance=level)
+def update_hormone_level(request, level_id):
+    hormone_level = get_object_or_404(HormoneLevel, id=level_id)
+
+    if request.method == 'POST':
+        form = HormoneLevelForm(request.POST, instance=hormone_level)
         if form.is_valid():
             form.save()
-            return redirect('list_hormone_levels')
+            return redirect('list_hormone_levels')  # Redirige vers la liste des niveaux hormonaux
     else:
-        form = HormoneLevelForm(instance=level)
-    return render(request, 'hormones/update_hormone_level.html', {'form': form})
+        form = HormoneLevelForm(instance=hormone_level)
 
+    return render(request, 'hormones/update.html', {'form': form,'hormone_level': hormone_level})
 # DELETE
-def delete_hormone_level(request, id):
-    level = get_object_or_404(HormoneLevel, id=id)
-    if request.method == "POST":
-        level.delete()
-        return redirect('list_hormone_levels')
-    return render(request, 'hormones/delete_hormone_level.html', {'level': level})
+
+def delete_hormone_level(request, level_id):
+    # Récupérer le niveau hormonal à supprimer
+    level = get_object_or_404(HormoneLevel, id=level_id)
+    
+    # Supprimer le niveau hormonal
+    level.delete()
+    
+    # Rediriger vers la liste des niveaux hormonaux après suppression
+    return redirect('list_hormone_levels') 
