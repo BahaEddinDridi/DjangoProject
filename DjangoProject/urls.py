@@ -16,9 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+
+from . import views
+
   # include is imported here
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+     path('login/', LoginView.as_view(), name='login'),
+    path('signup/', views.signup, name='signup'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('', include('fitness.urls')),  # Add this line
 ]
