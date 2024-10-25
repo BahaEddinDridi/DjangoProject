@@ -28,89 +28,74 @@
   <body>
     <!-- Navbar Section -->
     <header class="header">
-        <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3">
-                        <div class="header__logo">
-                            <a href="{% static './index.html'%}"><img src="{% static 'img/logo.png'%}" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-9">
-                        <div class="header__top__widget">
-                            <ul>
-                                <li>CALL US: + 1 800-567-8990</li>
-                                <li>WRITE US: OFFICE@EXAMPLE.COM</li>
-                                <li>OPENING TIMES: MON - FRI: 9:00 - 19:00</li>
-                            </ul>
-                            <a href="#" class="primary-btn">JOIN US</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="canvas__open">
-                    <i class="fa fa-bars"></i>
-                </div>
+      <div class="header__top">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-3">
+              <div class="header__logo">
+                <a href="{% static './index.html'%}"
+                  ><img src="{% static 'img/logo.png'%}" alt=""
+                /></a>
+              </div>
             </div>
-        </div>
-        <div class="header__nav">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9 col-md-9">
-                        <nav class="header__menu">
-                            <ul>
-                                <li class="active"><a href="{% static '../'%}">Home</a></li>
-                                <!-- <li><a href="{% static './about-us.html'%}">About</a></li> -->
-                                <li><a href="{% static '../exercises'%}">Exercises</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-lg-3 col-md-3">
-                        <div class="header__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-9 col-md-9">
+              <div class="header__top__widget">
+                <ul>
+                  <li>CALL US: + 1 800-567-8990</li>
+                  <li>WRITE US: OFFICE@EXAMPLE.COM</li>
+                  <li>OPENING TIMES: MON - FRI: 9:00 - 19:00</li>
+                </ul>
+                <a href="#" class="primary-btn">JOIN US</a>
+                {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}!</p>
+                {% endif %}
+              </div>
             </div>
+          </div>
+          <div class="canvas__open">
+            <i class="fa fa-bars"></i>
+          </div>
         </div>
+      </div>
+      <div class="header__nav">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-9 col-md-9">
+              <nav class="header__menu">
+                <ul>
+                  <li><a href="{% static '../'%}">Home</a></li>
+                  <li><a href="{% static '../exercises'%}">Exercises</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+              <div class="header__social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
     <!-- Hero Section Begin -->
     <section class="hero">
-        <div class="hero__sliders owl-carousel">
-            <div class="hero__items set-bg" data-setbg="{% static 'img/hero/hero-1.jpg'%}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="hero__text">
-                                <span>Welcome to Zogin</span>
-                                <h2>What hurts today makes you stronger tomorrow</h2>
-                                <a href="#" class="primary-btn">DISCOVER MORE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero__items set-bg" data-setbg="{% static 'img/hero/hero-1.jpg'}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="hero__text">
-                                <span>Welcome to Zogin</span>
-                                <h2>What hurts today makes you stronger tomorrow</h2>
-                                <a href="#" class="primary-btn">DISCOVER MORE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="hero__sliders owl-carousel">
+        <div
+          class="hero__items set-bg"
+          data-setbg="{% static 'img/hero/hero-1.jpg'%}"
+        >
+          <div class="container">
+            <main>{% block content %} {% endblock %}</main>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Hero Section End -->
     <!-- Content Block -->
-    <main>{% block content %} {% endblock %}</main>
-    
+
     <!-- Footer Section -->
     <section class="footer">
       <div class="container">
