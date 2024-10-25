@@ -1,0 +1,48 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<!-- Goals List Section -->
+<section class="class-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="class__form">
+                    <h2 class="text-center mb-4">Goals List</h2>
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Goal Type</th>
+                                <th scope="col">Target Value</th>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for goal in goals %}
+                            <tr>
+                                <td>{{ goal.goal_type }}</td>
+                                <td>{{ goal.target_value }}</td>
+                                <td>{{ goal.start_date }}</td>
+                                <td>{{ goal.end_date }}</td>
+                                <td>
+                                    <a href="{% url 'goal_edit' goal.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="{% url 'goal_delete' goal.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center">No goals found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'goal_add' %}" class="primary-btn">Add New Goal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

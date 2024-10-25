@@ -1,0 +1,24 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<!-- Delete Goal Section -->
+<section class="goal-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="goal__form">
+                    <h2 class="text-center mb-4">Supprimer l'objectif</h2>
+                    <p class="text-center">Es-tu sûr de vouloir supprimer cet objectif : <strong>{{ goal.goal_type }} (Cible: {{ goal.target_value }})</strong> ?</p>
+                    <form action="{% url 'goal_delete' goal.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                            <a href="{% url 'goal_list' %}" class="btn btn-secondary ml-3">Annuler</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
