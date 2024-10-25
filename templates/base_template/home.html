@@ -64,10 +64,8 @@
               <nav class="header__menu">
                 <ul>
                   <li><a href="{% static '../'%}">Home</a></li>
+                  <li><a href="{% static '../recipes' %}">Diet</a></li>
                   <li><a href="{% static '../exercises'%}">Exercises</a></li>
-                  <li>
-                    <a href="{% static '../training_plans'%}">Training Plans</a>
-                  </li>
                 </ul>
               </nav>
             </div>
@@ -194,5 +192,7 @@
     <script src="{% static 'js/jquery.slicknav.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
   </body>
 </html>
