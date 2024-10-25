@@ -1,0 +1,21 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<section class="class-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="class__form">
+                    <h2 class="text-center mb-4">Add New Training Plan</h2>
+                    <form action="{% url 'training_plan_add' %}" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="primary-btn mt-3">Add Training Plan</button>
+                    </form>
+                    <a href="{% url 'training_plan_list' %}" class="btn btn-link mt-3">Back to Training Plan List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

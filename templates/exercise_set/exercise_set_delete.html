@@ -1,0 +1,23 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<section class="class-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="class__form">
+                    <h2 class="text-center mb-4">Delete Exercise Set</h2>
+                    <p class="text-center">Are you sure you want to delete this exercise set?</p>
+                    <form action="{% url 'exercise_set_delete' set.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <a href="{% url 'training_plan_edit' set.training_plan.id %}" class="btn btn-secondary ml-3">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
