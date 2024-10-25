@@ -1,0 +1,20 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<section class="class-details spad">
+    <div class="container py-5">
+        <h1 class="text-center mb-5">Delete Ingredient</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <p>Are you sure you want to delete the ingredient "{{ ingredient.name }}"?</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                    <a href="{% url 'ingredients_list' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

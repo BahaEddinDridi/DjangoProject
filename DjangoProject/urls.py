@@ -29,6 +29,7 @@ urlpatterns = [
      path('login/', LoginView.as_view(), name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('', include('fitness.urls')),
+    path('', include('fitness.urls',)),
     path('goals/', include('goals.urls')),
+    path('recipes/', include('recipes.urls')),
 ]

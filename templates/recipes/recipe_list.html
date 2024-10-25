@@ -1,0 +1,116 @@
+{% extends 'recipes/diet_template.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    /* Custom styles for recipe tags */
+    .recipe-tags {
+        margin-top: 10px; /* Add margin above the tags */
+    }
+
+    .recipe-tags .tag {
+        background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+        backdrop-filter: blur(10px); /* Blurry background effect */
+        border-radius: 15px; /* Rounded edges */
+        padding: 8px 12px; /* Increased padding for better spacing */
+        margin: 5px; /* Margin around each tag to create space */
+        color: #333; /* Darker text color for contrast */
+        transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        display: inline-block; /* Ensure tags are inline-block to respect margins */
+    }
+
+    .recipe-tags .tag:hover {
+        background-color: rgba(255, 255, 255, 1); /* Solid white on hover */
+    }
+
+    /* Title styles */
+    .section-title {
+        text-align: center; /* Center align the title */
+        margin: 20px 0; /* Space around the title */
+        font-size: 2.5em; /* Font size for the title */
+        font-family: 'Arial', sans-serif; /* You can change this to any font you prefer */
+        font-weight: bold; /* Make the title bold */
+        color: #333; /* Title color */
+    }
+</style>
+
+<section class="hero-area">
+    <div class="container">
+        <h1 class="section-title">Today's Latest Recipes</h1> <!-- Title for the hero area -->
+    </div>
+    <div class="hero-slides owl-carousel">
+        
+        {% for recipe in recipes|slice:":3" %}  <!-- Display the latest 3 recipes -->
+        <div class="single-hero-slide bg-img" style="background-image: url('{% static 'img/bg-img/bg1.jpg' %}');">
+          <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">{{ recipe.name }}</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">{{ recipe.description|truncatewords:20 }}</p>  <!-- Truncate description to 20 words -->
+                            <div class="recipe-tags" data-animation="fadeInUp" data-delay="1000ms">
+                                <span class="tag"><i class="fa fa-clock-o"></i> {{ recipe.prep_time }} min prep</span> <!-- For Prep Time -->
+                                <span class="tag"><i class="fa fa-fire"></i> {{ recipe.cook_time }} min cook</span>
+                                <span class="tag"><i class="fa fa-users"></i> {{ recipe.servings }} servings</span>
+                                <span class="tag"><i class="fa fa-leaf"></i> {{ recipe.type|title }}</span> <!-- For Recipe Type -->
+                                <span class="tag"><i class="fa fa-user"></i> {{ recipe.user }}</span>
+                            </div>
+                            <a href="#" class="btn delicious-btn text-white" data-animation="fadeInUp" data-delay="1000ms">See Recipe</a>  <!-- Link to the recipe detail page -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="single-hero-slide bg-img" style="background-image: url('img/bg-img/bg1.jpg');"> <!-- Default image if no recipes -->
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
+                            <h2 data-animation="fadeInUp" data-delay="300ms">No Latest Recipes</h2>
+                            <p data-animation="fadeInUp" data-delay="700ms">No recipes available yet. Check back later!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="best-receipe-area">
+    <div class="container">
+        <h1 class="section-title">All Recipes</h1> <!-- Title for the best recipes section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                    <h3>The Best Recipes</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for recipe in recipes %}
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-best-receipe-area mb-30">
+                    <img src="{% static 'img/bg-img/bg2.jpg' %}" alt="{{ recipe.name }}">  <!-- Assuming each recipe has an image_url attribute -->
+                    <div class="receipe-content">
+                        <a href="#">  <!-- Link to the recipe detail page -->
+                            <h5>{{ recipe.name }}</h5>
+                        </a>
+                        <p><strong>Owner:</strong> {{ recipe.user }}</p>
+                        <p><strong>Type:</strong> {{ recipe.type|title }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center">No recipes available. <a href="#">Add one now!</a></p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

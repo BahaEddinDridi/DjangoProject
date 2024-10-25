@@ -1,0 +1,43 @@
+{% extends 'base_template/home.html' %} {% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Plan Detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <section class="class-details spad">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="class__form">
+                        <h2 class="text-center mb-4">Training Plan: {{ plan.name }}</h2>
+                        <p class="text-center">Date Created: {{ plan.date_created }}</p>
+                        <h3 class="mt-4">Exercises</h3>
+                        <ul class="list-group">
+                            {% for exercise_set in plan.exercise_sets.all %}
+                                <li class="list-group-item">
+                                    {{ exercise_set.exercise.name }} - {{ exercise_set.sets }} sets, {{ exercise_set.repetitions }} reps, Rest: {{ exercise_set.rest_time }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="text-center mt-4">
+                            <a href="{% url 'training_plan_edit' plan.id %}" class="btn btn-primary">Edit Training Plan</a>
+                            <a href="{% url 'training_plan_list' %}" class="btn btn-secondary">Back to Training Plans</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}
+

@@ -1,0 +1,152 @@
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+    .form-container {
+        background-color: #ffffff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: 20px auto;
+    }
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .custom-input,
+    .custom-textarea,
+    .custom-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        transition: border-color 0.2s;
+    }
+    .custom-input:focus,
+    .custom-textarea:focus,
+    .custom-select:focus {
+        border-color: #80bdff;
+        outline: none;
+    }
+    .btn {
+        background-color: #40ba37;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: block;
+        margin: 20px auto;
+    }
+    .btn:hover {
+        background-color: #36a02e;
+    }
+    .ingredient-entry {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .ingredient-entry select,
+    .ingredient-entry input {
+        width: 100%;
+    }
+    .ingredients-container {
+        display: flex;
+        flex-direction: column;
+    }
+    .remove-btn {
+        background-color: #dc3545; /* Bootstrap danger color */
+        margin-left: 10px;
+    }
+</style>
+
+<div class="form-container">
+    <h1>Create New Recipe</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <!-- Left half for Recipe Information -->
+            <div class="col-md-4">
+                <input type="text" id="name" name="name" class="custom-input" placeholder="Recipe Name" required />
+                <textarea name="description" class="custom-textarea" placeholder="Recipe Description"></textarea>
+                <textarea name="steps" class="custom-textarea" placeholder="Cooking Steps" required></textarea>
+                <input type="number" name="prep_time" class="custom-input" placeholder="Preparation Time (minutes)" required />
+                <input type="number" name="cook_time" class="custom-input" placeholder="Cooking Time (minutes)" required />
+                <input type="number" name="servings" class="custom-input" placeholder="Number of Servings" required min="1" />
+                <select name="type" class="custom-select" required>
+                    <option value="" disabled selected>Select Recipe Type</option>
+                    <option value="appetizer">Appetizer</option>
+                    <option value="main_course">Main Course</option>
+                    <option value="dessert">Dessert</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="gluten_free">Gluten Free</option>
+                    <option value="paleo">Paleo</option>
+                    <option value="keto">Keto</option>
+                    <option value="low_carb">Low Carb</option>
+                </select>
+            </div>
+
+            <!-- Right half for Ingredients -->
+            <div class="col-md-4">
+                <div class="ingredients-container" id="ingredients-container">
+                    <div class="row ingredient-entry">
+                        <div class="col-4 mb-3">
+                            <select name="ingredient" class="custom-select" required>
+                                <option value="" disabled selected>Choose Ingredient</option>
+                                {% for ingredient in ingredients %}
+                                    <option value="{{ ingredient.id }}">{{ ingredient.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-4 mb-3">
+                            <input type="number" step="any" name="quantity" class="custom-input " placeholder="Quantity" required />
+                        </div>
+                        <div class="col-4 mb-3">
+                            <select name="unit" class="custom-select " required>
+                                <option value="" disabled selected>Unit</option>
+                                <option value="g">grams</option>
+                                <option value="kg">kilograms</option>
+                                <option value="ml">milliliters</option>
+                                <option value="l">liters</option>
+                                <option value="cup">cups</option>
+                                <option value="tbsp">tablespoons</option>
+                                <option value="tsp">teaspoons</option>
+                            </select>
+                        </div>
+                        <button type="button" class="remove-btn btn " onclick="removeIngredient(this)">X</button>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="button" onclick="addIngredient()" class="btn mb-3">+</button>
+                </div>
+                <button type="submit" class="btn delicious-btn">Create Recipe</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function addIngredient() {
+        const container = document.getElementById('ingredients-container');
+        const entry = document.querySelector('.ingredient-entry').cloneNode(true);
+        entry.querySelector('input[name="quantity"]').value = ''; // Reset quantity input
+        entry.querySelector('select[name="ingredient"]').selectedIndex = 0; // Reset ingredient select
+        entry.querySelector('select[name="unit"]').selectedIndex = 0; // Reset unit select
+        container.appendChild(entry);
+    }
+
+    function removeIngredient(button) {
+        const entry = button.parentElement;
+        entry.remove(); // Remove the ingredient entry
+    }
+</script>
+
+{% endblock %}

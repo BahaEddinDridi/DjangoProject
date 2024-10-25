@@ -1,0 +1,35 @@
+{% extends 'base_template/home.html' %} {% block content %}
+<section class="exercise-set-form spad">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2 class="text-center mb-4">Add Exercise Set</h2>
+        <form
+          action="{% url 'exercise_set_add' training_plan.id %}"
+          method="POST"
+        >
+          {% csrf_token %} {{ form.non_field_errors }}
+          <div class="form-group">
+            {{ form.exercise.label_tag }} {{ form.exercise }} {{
+            form.exercise.errors }}
+          </div>
+          <div class="form-group">
+            {{ form.sets.label_tag }} {{ form.sets }} {{ form.sets.errors }}
+          </div>
+          <div class="form-group">
+            {{ form.repetitions.label_tag }} {{ form.repetitions }} {{
+            form.repetitions.errors }}
+          </div>
+          <div class="form-group">
+            {{ form.rest_time.label_tag }} {{ form.rest_time }} {{
+            form.rest_time.errors }}
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Add Exercise Set
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
