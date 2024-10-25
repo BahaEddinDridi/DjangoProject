@@ -1,0 +1,17 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<h1>{{ recipe.name }}</h1>
+
+<h3>Ingredients:</h3>
+<ul>
+    {% for recipe_ingredient in recipe.recipeingredient_set.all %}
+        <li>{{ recipe_ingredient.ingredient.name }} - {{ recipe_ingredient.quantity }} {{ recipe_ingredient.unit }}</li>
+    {% endfor %}
+</ul>
+
+<p><strong>Total Calories:</strong> {{ recipe.total_calories }} kcal</p>
+<p><strong>Protein:</strong> {{ recipe.total_protein }} g</p>
+<p><strong>Carbs:</strong> {{ recipe.total_carbs }} g</p>
+<p><strong>Fat:</strong> {{ recipe.total_fat }} g</p>
+{% endblock %}

@@ -119,8 +119,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'templates/base_template'),
-   # os.path.join(BASE_DIR, 'templates', 'base', 'css'),
+    os.path.join(BASE_DIR, 'templates/base_template'),  # For general static files like css, js, img in base_template
+    os.path.join(BASE_DIR, 'templates/Diet'),
+    # os.path.join(BASE_DIR, 'templates', 'base', 'css'),
     #os.path.join(BASE_DIR, 'templates', 'base', 'js'),
     # Add other static directories if needed
 ]
