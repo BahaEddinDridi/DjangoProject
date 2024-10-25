@@ -1,0 +1,78 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Ajouter un Repas</h1>
+    
+    <form method="POST" action="{% url 'create_meal' %}">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="name">Nom du repas</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Entrez le nom du repas" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="calories">Calories</label>
+            <input type="number" step="0.01" class="form-control" id="calories" name="calories" placeholder="Entrez les calories" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="protein">Proteine</label>
+            <input type="number" class="form-control" id="protein" name="protein" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="carbs">Carbs</label>
+            <input type="number" class="form-control" id="carbs" name="carbs" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="fat">Fat</label>
+            <input type="number" class="form-control" id="fat" name="fat" required>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="fa fa-save"></i> Enregistrer
+            </button>
+            <a href="{% url 'list_meal' %}" class="btn btn-secondary btn-lg">
+                <i class="fa fa-arrow-left"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+<style>
+    /* Styles personnalisés */
+    h1 {
+        color: #5cb85c;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    button.btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    button.btn-success:hover {
+        background-color: #218838;
+    }
+
+    a.btn-secondary {
+        margin-left: 10px;
+    }
+
+    a.btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>

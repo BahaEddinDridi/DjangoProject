@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EDAMAM_APP_ID = 'your_app_id'  # Remplace par ton app_id
+EDAMAM_APP_KEY = 'your_app_key'
 
 # Application definition
 
@@ -38,9 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fitness',
-    'Meal',
-    'NutritionPlan',
     'recipes',
+    'nutrition',
 ]
 
 MIDDLEWARE = [
