@@ -6,7 +6,31 @@ from .forms import TrainingPlanForm, ExerciseSetForm
 from django.views import View
 from django.http import HttpResponse
 from datetime import timedelta
+from groq import Groq
+from os import environ
+client = Groq(api_key='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')
 
+# Exercise detail view with recommendations
+def exercise_detail(request, exercise_id):
+    # Fetch the exercise from the database
+    exercise = get_object_or_404(Exercise, id=exercise_id)
+    
+    # Fetch recommendations from the Groq API
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Recommend similar exercises or tips for improving on '{exercise.name}'."
+            }
+        ],
+        model="llama3-8b-8192",
+    )
+    
+    # Get the recommendation text from the response
+    recommendations = chat_completion.choices[0].message.content
+
+    # Pass exercise and recommendations to the template
+    return render(request, 'exercise/detail.html', {'exercise': exercise, 'recommendations': recommendations})
 # List all exercises
 def exercise_list(request):
     exercises = Exercise.objects.all()

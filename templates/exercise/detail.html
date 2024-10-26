@@ -1,0 +1,19 @@
+<!-- exercise/detail.html -->
+
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<div class="container mt-5" style="background-color: white; color: black; padding: 20px; border-radius: 8px;">
+    <h2>{{ exercise.name }}</h2>
+    <p><strong>Description:</strong> {{ exercise.description }}</p>
+    <p><strong>Category:</strong> {{ exercise.category }}</p>
+    <p><strong>Muscles Targeted:</strong> {{ exercise.muscles_targeted }}</p>
+
+    <h3>Recommendations</h3>
+    <p>{{ recommendations }}</p>
+
+    <div class="mt-4">
+        <a href="{% url 'exercise_list' %}" class="btn btn-secondary">Back to Exercise List</a>
+    </div>
+</div>
+{% endblock %}
