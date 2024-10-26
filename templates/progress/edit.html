@@ -1,0 +1,45 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<!-- Edit Progress Section -->
+<section class="progress-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="progress__form">
+                    <h2 class="text-center mb-4">Modifier le progrès</h2>
+                    <form action="{% url 'progress_edit' progress.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="PUT">
+
+                        <!-- Sélection de l'objectif -->
+                        <div class="form-group">
+                            <label for="goal">Objectif</label>
+                            <select id="goal" name="goal" class="form-control" required>
+                                {% for goal in goals %}
+                                <option value="{{ goal.id }}" {% if progress.goal.id == goal.id %}selected{% endif %}>{{ goal.title }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Date de progrès -->
+                        <div class="form-group">
+                            <label for="progress_date">Date de progrès</label>
+                            <input type="date" id="progress_date" name="progress_date" value="{{ progress.progress_date|date:'Y-m-d' }}" required class="form-control">
+                        </div>
+
+                        <!-- Valeur de progrès -->
+                        <div class="form-group">
+                            <label for="value">Valeur de progrès</label>
+                            <input type="text" id="value" name="value" value="{{ progress.value }}" required class="form-control">
+                        </div>
+
+                        <button type="submit" class="primary-btn mt-3">Modifier le progrès</button>
+                    </form>
+                    <a href="{% url 'progress_list' %}" class="btn btn-link mt-3">Retour à la liste des progrès</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

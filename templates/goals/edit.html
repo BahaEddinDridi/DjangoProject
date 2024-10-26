@@ -11,6 +11,11 @@
                     <form action="{% url 'goal_edit' goal.id %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="_method" value="PUT">
+                        <div class="form-group">
+                            <label for="title">Title Goal</label>
+                            <input type="text" id="title" name="title" value="{{ goal.title }}" required class="form-control">
+                        </div>
+                        
                         
                         <!-- Type d'objectif -->
                         <div class="form-group">

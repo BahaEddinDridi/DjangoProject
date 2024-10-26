@@ -32,4 +32,5 @@ urlpatterns = [
     path('', include('fitness.urls',)),
     path('goals/', include('goals.urls')),
     path('recipes/', include('recipes.urls')),
+    path('progress/', include('progress.urls')),
 ]
