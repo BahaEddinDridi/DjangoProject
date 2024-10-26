@@ -1,43 +1,58 @@
-{% extends 'base_template/home.html' %} {% block content %}
+{% extends 'base_template/home.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Plan Detail</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <section class="class-details spad">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="class__form">
-                        <h2 class="text-center mb-4">Training Plan: {{ plan.name }}</h2>
-                        <p class="text-center">Date Created: {{ plan.date_created }}</p>
-                        <h3 class="mt-4">Exercises</h3>
-                        <ul class="list-group">
-                            {% for exercise_set in plan.exercise_sets.all %}
-                                <li class="list-group-item">
-                                    {{ exercise_set.exercise.name }} - {{ exercise_set.sets }} sets, {{ exercise_set.repetitions }} reps, Rest: {{ exercise_set.rest_time }}
-                                </li>
-                            {% endfor %}
-                        </ul>
+{% block content %}
+<section class="training-plan-detail spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg p-3" style="border: 1px solid #ddd; border-radius: 10px;">
+                    <div class="card-body">
+                        <h2 class="text-center mb-3" style="font-weight: bold; font-size: 1.5em;">
+                            Training Plan: {{ plan.name }}
+                        </h2>
+                        <p class="text-center text-muted" style="font-size: 0.9em;">
+                            Date Created: {{ plan.date_created }}
+                        </p>
+
+                        <div class="mt-3">
+                            <h4 class="text-center" style="font-weight: 600; font-size: 1.2em;">Exercises Included</h4>
+
+                            <!-- Responsive card container -->
+                            <div class="row justify-content-center mt-3">
+                                {% for item in exercise_sets_with_recommendations %}
+                                    <div class="col-12 col-sm-6 col-md-4 mb-3 d-flex justify-content-center">
+                                        <div class="card bg-light shadow-sm" style="width: 90%; padding: 10px; border-radius: 8px;">
+                                            <div class="card-body p-2 text-center">
+                                                <h5 class="card-title mb-2" style="font-weight: 600; font-size: 0.9em;">
+                                                    {{ item.exercise_set.exercise.name }}
+                                                </h5>
+                                                <p class="card-text text-muted mb-1" style="font-size: 0.8em;">
+                                                    {{ item.exercise_set.sets }} sets, {{ item.exercise_set.repetitions }} reps
+                                                </p>
+                                                <p class="text-muted" style="font-size: 0.7em;">Rest: {{ item.exercise_set.rest_time }}</p>
+
+                                                <!-- AI-Generated Suggestions -->
+                                                <div class="card p-2 shadow-sm mt-2" style="background-color: #f9f9f9;">
+                                                    <h6 class="font-weight-bold mb-1" style="font-size: 0.75em;">AI Recommendations:</h6>
+                                                    <p class="mb-0" style="font-size: 0.7em;">{{ item.recommendations }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p class="text-center text-muted">No exercises added to this training plan.</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+
                         <div class="text-center mt-4">
-                            <a href="{% url 'training_plan_edit' plan.id %}" class="btn btn-primary">Edit Training Plan</a>
-                            <a href="{% url 'training_plan_list' %}" class="btn btn-secondary">Back to Training Plans</a>
+                            <a href="{% url 'training_plan_edit' plan.id %}" class="btn btn-primary btn-sm mr-2">Edit Training Plan</a>
+                            <a href="{% url 'training_plan_list' %}" class="btn btn-secondary btn-sm">Back to Training Plans</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    </div>
+</section>
 {% endblock %}
-

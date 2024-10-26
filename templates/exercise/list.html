@@ -1,57 +1,58 @@
-{% extends 'base_template/home.html' %} {% block content %}
+{% extends 'base_template/home.html' %}
+
+{% block content %}
 <!-- Exercise List Section -->
 <section class="class-details spad">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-12">
-        <div class="class__form">
-          <h2 class="text-center mb-4">Exercise List</h2>
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Category</th>
-                <th scope="col">Muscles Targeted</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for exercise in exercises %}
-              <tr>
-                <td>{{ exercise.name }}</td>
-                <td>{{ exercise.description }}</td>
-                <td>{{ exercise.category }}</td>
-                <td>{{ exercise.muscles_targeted }}</td>
-                <td>
-                  <a
-                    href="{% url 'exercise_edit' exercise.id %}"
-                    class="btn btn-primary btn-sm"
-                    >Edit</a
-                  >
-                  <a
-                    href="{% url 'exercise_detail' exercise.id %}"
-                    class="btn btn-info btn-sm"
-                    >View Details</a
-                  >
-                  <a
-                    href="{% url 'exercise_delete' exercise.id %}"
-                    class="btn btn-danger btn-sm"
-                    >Delete</a
-                  >
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        <div class="class__form p-4 bg-white shadow rounded">
+          <h2 class="text-center mb-4" style="font-weight: bold; color: #333;">Exercise List</h2>
+          <div class="row">
+            {% for exercise in exercises %}
+            <div class="col-md-4 mb-3"> <!-- Smaller column size for narrower cards -->
+              <div class="card shadow-sm h-100" style="max-height: 350px;"> <!-- Set a max height for cards -->
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: 1.1em;">{{ exercise.name }}</h5>
+                  <p class="card-text" style="font-size: 0.9em; color: #555;">
+                    {{ exercise.description|truncatewords:10 }} <!-- Shorter description -->
+                  </p>
+                  <p class="card-text" style="font-size: 0.85em;"><strong>Category:</strong> {{ exercise.category }}</p>
+                  <p class="card-text" style="font-size: 0.85em;"><strong>Muscles Targeted:</strong> {{ exercise.muscles_targeted }}</p>
+                  <div class="d-flex justify-content-between mt-2">
+                    <a href="{% url 'exercise_edit' exercise.id %}" class="btn btn-primary btn-sm" title="Edit">
+                      <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url 'exercise_detail' exercise.id %}" class="btn btn-info btn-sm" title="View Details">
+                      <i class="fas fa-eye"></i> View
+                    </a>
+                    <a href="{% url 'exercise_delete' exercise.id %}" class="btn btn-danger btn-sm" title="Delete">
+                      <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% if not exercises %}
+          <p class="text-center text-muted">No exercises available.</p>
+          {% endif %}
           <div class="text-center mt-4">
-            <a href="{% url 'exercise_add' %}" class="primary-btn"
-              >Add New Exercise</a
-            >
+            <a href="{% url 'exercise_add' %}" class="btn btn-success px-4 py-2 rounded-pill" style="font-weight: bold;">
+              + Add New Exercise
+            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Font Awesome for icons (if not included in the base template) -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+
 {% endblock %}

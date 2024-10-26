@@ -8,36 +8,16 @@ from django.http import HttpResponse
 from datetime import timedelta
 from groq import Groq
 from os import environ
-client = Groq(api_key='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')
 
-# Exercise detail view with recommendations
-def exercise_detail(request, exercise_id):
-    # Fetch the exercise from the database
-    exercise = get_object_or_404(Exercise, id=exercise_id)
-    
-    # Fetch recommendations from the Groq API
-    chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": f"Recommend similar exercises or tips for improving on '{exercise.name}'."
-            }
-        ],
-        model="llama3-8b-8192",
-    )
-    
-    # Get the recommendation text from the response
-    recommendations = chat_completion.choices[0].message.content
-
-    # Pass exercise and recommendations to the template
-    return render(request, 'exercise/detail.html', {'exercise': exercise, 'recommendations': recommendations})
-# List all exercises
+####" AI/ML Model"
+client = Groq(api_key='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') 
+# Exercises
 def exercise_list(request):
     exercises = Exercise.objects.all()
     print("exercises") # This will print the exercises in the console
     return render(request, 'exercise/list.html', {'exercises': exercises})
 
-# Add new exercise
+
 def exercise_add(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -48,7 +28,7 @@ def exercise_add(request):
         return redirect('exercise_list')
     return render(request, 'exercise/add.html')
 
-# Edit existing exercise
+
 def exercise_edit(request, exercise_id):
     exercise = get_object_or_404(Exercise, id=exercise_id)
     if request.method == 'POST':
@@ -60,7 +40,7 @@ def exercise_edit(request, exercise_id):
         return redirect('exercise_list')
     return render(request, 'exercise/edit.html', {'exercise': exercise})
 
-# Delete exercise
+
 def exercise_delete(request, exercise_id):
     exercise = get_object_or_404(Exercise, id=exercise_id)
     if request.method == 'POST':
@@ -68,10 +48,12 @@ def exercise_delete(request, exercise_id):
         return redirect('exercise_list')
     return render(request, 'exercise/delete.html', {'exercise': exercise})
 
-# Training Plan CRUD
+
+# Training Plan 
 def training_plan_list(request):
     plans = TrainingPlan.objects.filter(user=request.user)
     return render(request, 'training_plan/training_plan_list.html', {'plans': plans})
+
 
 def training_plan_add(request):
     if request.method == 'POST':
@@ -130,7 +112,42 @@ def training_plan_delete(request, id):  # Changed 'plan_id' to 'id'
         return redirect('training_plan_list')
     return render(request, 'training_plan/training_plan_delete.html', {'plan': plan})
 
-# Exercise Set CRUD
+
+
+
+def training_plan_detail(request, plan_id):
+    # Get the training plan by ID
+    plan = get_object_or_404(TrainingPlan, id=plan_id)
+    exercise_sets_with_recommendations = []
+
+    # Fetch AI recommendations for each exercise in the plan
+    for exercise_set in plan.exercise_sets.all():
+        exercise = exercise_set.exercise
+        
+        # Get a brief AI-generated suggestion for each exercise
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"Provide a brief, 1 short sentence recommendation or improvement tips for '{exercise.name}'."
+                }
+            ],
+            model="llama3-8b-8192",
+        )
+        
+        # Extract the recommendation text from the response
+        recommendations = chat_completion.choices[0].message.content
+        exercise_sets_with_recommendations.append({
+            'exercise_set': exercise_set,
+            'recommendations': recommendations
+        })
+
+    return render(request, 'training_plan/training_plan_detail.html', {
+        'plan': plan,
+        'exercise_sets_with_recommendations': exercise_sets_with_recommendations
+    })
+
+# Exercise Set
 def exercise_set_add(request, training_plan_id):
     training_plan = get_object_or_404(TrainingPlan, id=training_plan_id)
     if request.method == 'POST':
@@ -143,11 +160,6 @@ def exercise_set_add(request, training_plan_id):
     else:
         form = ExerciseSetForm()
     return render(request, 'exercise_set/exercise_set_add.html', {'form': form, 'training_plan': training_plan})
-
-
-def training_plan_detail(request, plan_id):
-    plan = get_object_or_404(TrainingPlan, id=plan_id)
-    return render(request, 'training_plan/training_plan_detail.html', {'plan': plan})
 
 
 def exercise_set_edit(request, id):
@@ -169,6 +181,30 @@ def exercise_set_delete(request, id):
         exercise_set.delete()
         return redirect('training_plan/training_plan_edit', id=training_plan_id)
     return render(request, 'exercise_set/exercise_set_confirm_delete.html', {'exercise_set': exercise_set})
+
+
+
+# Exercise detail view with recommendations
+def exercise_detail(request, exercise_id):
+    # Fetch the exercise from the database
+    exercise = get_object_or_404(Exercise, id=exercise_id)
+    
+    # Fetch recommendations from the Groq API
+    chat_completion = client.chat.completions.create(
+        messages=[
+            {
+                "role": "user",
+                "content": f"Provide a brief, 3 short sentence Recommended similar exercises or tips for improving on '{exercise.name}'."
+            }
+        ],
+        model="gemma-7b-it",
+    )
+    
+    # Get the recommendation text from the response
+    recommendations = chat_completion.choices[0].message.content
+
+    # Pass exercise and recommendations to the template
+    return render(request, 'exercise/detail.html', {'exercise': exercise, 'recommendations': recommendations})
 
 def home(request):
     return render(request, 'base_template/home.html')
