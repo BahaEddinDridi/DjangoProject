@@ -74,7 +74,6 @@ def ingredient_delete(request, id):
 def add_recipe(request):
     if request.method == "POST":
         image = request.FILES.get('image_url')
-        
         name = request.POST.get('name')
         description = request.POST.get('description', '')
         steps = request.POST.get('steps', '')
@@ -85,7 +84,6 @@ def add_recipe(request):
         ingredient_ids = request.POST.getlist('ingredient') 
         quantities = request.POST.getlist('quantity')  
         units = request.POST.getlist('unit')
-
         recipe = Recipe.objects.create(
             user=request.user,
             name=name,
@@ -97,7 +95,6 @@ def add_recipe(request):
             type=recipe_type,
             image=image
         )
-
         for ingredient_id, quantity, unit in zip(ingredient_ids, quantities, units):
             ingredient = Ingredient.objects.get(id=ingredient_id)
             quantity = float(quantity)
@@ -107,9 +104,7 @@ def add_recipe(request):
                 quantity=quantity,
                 unit=unit
             )
-
-        return redirect('recipe_list')  
-
+        return redirect('recipe_list')
     ingredients = Ingredient.objects.all()
     return render(request, 'recipes/create_recipe.html', {'ingredients': ingredients})
 

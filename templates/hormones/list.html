@@ -34,10 +34,13 @@
                             aria-label="Modifier le niveau hormonal">
                             <i class="fa fa-pencil-alt"></i> Modifier
                         </a>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#deleteModal{{ level.id }}">
-                            <i class="fa fa-trash"></i> Supprimer
-                        </button>
+                        <form action="{% url 'delete_hormone_level' level.id %}" method="POST" style="display:inline;" id="delete-form-{{ level.id }}">
+                            {% csrf_token %}
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ level.id }})" title="Delete">
+                                <i class="fa fa-trash"></i> Supprimer
+                            </button>
+                        </form>
+                
                     </div>
                 </div>
 
@@ -127,7 +130,14 @@
         </div>
     </div>
 </div>
-
+<script>
+    function confirmDelete(levelId) {
+        const confirmation = confirm("Are you sure you want to delete this hormone level?");
+        if (confirmation) {
+            document.getElementById(`delete-form-${levelId}`).submit();
+        }
+    }
+</script>
 {% endblock %}
 
 <!-- Ajout de styles personnalisés -->

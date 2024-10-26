@@ -104,13 +104,8 @@ def update_hormone_level(request, level_id):
 # DELETE
 
 def delete_hormone_level(request, level_id):
-    # Récupérer le niveau hormonal à supprimer
     level = get_object_or_404(HormoneLevel, id=level_id)
-    
-    # Supprimer le niveau hormonal
     level.delete()
-    
-    # Rediriger vers la liste des niveaux hormonaux après suppression
     return redirect('list_hormone_levels') 
 
 
