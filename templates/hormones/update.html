@@ -1,0 +1,73 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Mettre à Jour un Niveau Hormonal</h1>
+    
+    <form method="POST" action="{% url 'update_hormone_level' hormone_level.id %}">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="hormone_name">Nom de l'Hormone</label>
+            <input type="text" class="form-control" id="hormone_name" name="hormone_name" value="{{ hormone_level.hormone_name }}" placeholder="Entrez le nom de l'hormone" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="level">Niveau</label>
+            <input type="number" step="0.01" class="form-control" id="level" name="level" value="{{ hormone_level.level }}" placeholder="Entrez le niveau hormonal" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="unit">Unité</label>
+            <input type="text" class="form-control" id="unit" name="unit" value="{{ hormone_level.unit }}" placeholder="Ex : mg/dL, ng/mL" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="date_measured">Date de Mesure</label>
+            <input type="date" class="form-control" id="date_measured" name="date_measured" value="{{ hormone_level.date_measured|date:'Y-m-d' }}" required>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg">
+                <i class="fa fa-save"></i> Enregistrer
+            </button>
+            <a href="{% url 'list_hormone_levels' %}" class="btn btn-secondary btn-lg">
+                <i class="fa fa-arrow-left"></i> Annuler
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+<style>
+    /* Styles personnalisés */
+    h1 {
+        color: #5cb85c;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    button.btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    button.btn-success:hover {
+        background-color: #218838;
+    }
+
+    a.btn-secondary {
+        margin-left: 10px;
+    }
+
+    a.btn-secondary:hover {
+        background-color: #5a6268;
+    }
+</style>
