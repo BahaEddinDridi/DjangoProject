@@ -34,6 +34,19 @@
         font-weight: bold; /* Make the title bold */
         color: #333; /* Title color */
     }
+
+    .image-wrapper {
+    width: 100%; /* Ensures the wrapper takes full width */
+    height: 200px; /* Fixed height for uniformity */
+    overflow: hidden; /* Hides any overflow from images */
+    }
+
+    .image-wrapper img {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensures the image fills the wrapper */
+    }
+
 </style>
 
 <section class="hero-area">
@@ -43,12 +56,12 @@
     <div class="hero-slides owl-carousel">
         
         {% for recipe in recipes|slice:":3" %}  <!-- Display the latest 3 recipes -->
-        <div class="single-hero-slide bg-img" style="background-image: url('{% static 'img/bg-img/bg1.jpg' %}');">
-          <div class="container h-100">
+        <div class="single-hero-slide bg-img" style="background-image: url('{{ recipe.image.url }}');">
+            <div class="container h-100">
                 <div class="row h-100 align-items-center">
                     <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                         <div class="hero-slides-content" data-animation="fadeInUp" data-delay="100ms">
-                            <h2 data-animation="fadeInUp" data-delay="300ms">{{ recipe.name }}</h2>
+                            <h2 data-animation="fadeInUp" data-delay="300ms">{{ recipe.name|capfirst }}</h2>
                             <p data-animation="fadeInUp" data-delay="700ms">{{ recipe.description|truncatewords:20 }}</p>  <!-- Truncate description to 20 words -->
                             <div class="recipe-tags" data-animation="fadeInUp" data-delay="1000ms">
                                 <span class="tag"><i class="fa fa-clock-o"></i> {{ recipe.prep_time }} min prep</span> <!-- For Prep Time -->
@@ -57,7 +70,7 @@
                                 <span class="tag"><i class="fa fa-leaf"></i> {{ recipe.type|title }}</span> <!-- For Recipe Type -->
                                 <span class="tag"><i class="fa fa-user"></i> {{ recipe.user }}</span>
                             </div>
-                            <a href="#" class="btn delicious-btn text-white" data-animation="fadeInUp" data-delay="1000ms">See Recipe</a>  <!-- Link to the recipe detail page -->
+                            <a href="{% url 'recipe_detail' recipe.id %}" class="btn delicious-btn text-white" data-animation="fadeInUp" data-delay="1000ms">See Recipe</a>  <!-- Link to the recipe detail page -->
                         </div>
                     </div>
                 </div>
@@ -82,23 +95,23 @@
 
 <section class="best-receipe-area">
     <div class="container">
-        <h1 class="section-title">All Recipes</h1> <!-- Title for the best recipes section -->
-        <div class="row">
-            <div class="col-12">
-                <div class="section-heading">
-                    <h3>The Best Recipes</h3>
-                </div>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="section-title">All Recipes</h1>
+        <a href="{% url 'add_recipe' %}" class="btn btn-info">Add Recipe</a> 
+
         </div>
+
 
         <div class="row">
             {% for recipe in recipes %}
             <div class="col-12 col-sm-6 col-lg-4">
                 <div class="single-best-receipe-area mb-30">
-                    <img src="{% static 'img/bg-img/bg2.jpg' %}" alt="{{ recipe.name }}">  <!-- Assuming each recipe has an image_url attribute -->
+                    <div class="image-wrapper">
+                        <img src="{{ recipe.image.url }}" alt="{{ recipe.name }}">
+                    </div>
                     <div class="receipe-content">
-                        <a href="#">  <!-- Link to the recipe detail page -->
-                            <h5>{{ recipe.name }}</h5>
+                        <a href="{% url 'recipe_detail' recipe.id %}"> 
+                            <h5>{{ recipe.name|capfirst }}</h5>
                         </a>
                         <p><strong>Owner:</strong> {{ recipe.user }}</p>
                         <p><strong>Type:</strong> {{ recipe.type|title }}</p>
@@ -107,7 +120,7 @@
             </div>
             {% empty %}
             <div class="col-12">
-                <p class="text-center">No recipes available. <a href="#">Add one now!</a></p>
+                <p class="text-center">No recipes available. <a href="{% url 'add_recipe' %}">Add one now!</a></p>
             </div>
             {% endfor %}
         </div>

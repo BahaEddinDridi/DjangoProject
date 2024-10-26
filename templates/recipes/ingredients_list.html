@@ -1,36 +1,101 @@
-{% extends 'base_template/home.html' %}
+{% extends 'recipes/diet_template.html' %}
+
+{% load static %}
 
 {% block content %}
-<section class="class-details spad">
-    <div class="container py-5">
-        <h1 class="text-center mb-5">Ingredients List</h1>
+
+<style>
+    .image-wrapper {
+        width: 100%; 
+        height: 200px; /* Fixed height for all images */
+        overflow: hidden; 
+        border-radius: 0.5rem; /* Round the image corners */
+    }
+
+    .image-wrapper img {
+        width: 100%;
+        height: 100%; /* Ensure the image fills the height */
+        object-fit: cover; /* Cover the area without distortion */
+    }
+
+    .ingredient-card {
+        border: 1px solid #ddd; /* Add a border */
+        border-radius: 0.5rem; /* Round the card corners */
+        padding: 15px; /* Add padding inside the card */
+        margin-bottom: 20px; /* Add space between cards */
+        transition: box-shadow 0.3s; /* Smooth transition for hover effect */
+        position: relative; /* Positioning for absolute icons */
+        text-align: center; /* Center text content */
+    }
+
+    .ingredient-card:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+    }
+
+    .icon-container {
+        position: absolute; /* Absolute positioning */
+        top: 10px; /* Space from the top */
+        right: 10px; /* Space from the right */
+        display: flex; /* Flexbox for icon arrangement */
+        gap: 10px; /* Space between icons */
+        align-items: center; /* Center icons vertically */
+    }
+
+    .icon-container a,
+    .icon-container button {
+        color: #007bff; /* Primary color for icons */
+        text-decoration: none; /* Remove underline */
+        font-size: 1.2rem; /* Increase icon size for better visibility */
+    }
+</style>
+
+<section class="small-receipe-area section-padding-80-0">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="section-title">All Ingredients</h1>
+            <a href="{% url 'add_ingredient' %}" class="btn btn-primary">Add Ingredient</a> <!-- Button to add new ingredient -->
+        </div>
 
         <div class="row">
             {% for ingredient in ingredients %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ ingredient.name }}</h5>
-                        <p class="card-text">
-                            <strong>Calories per unit:</strong> {{ ingredient.calories }} kcal <br />
-                            <strong>Protein per unit:</strong> {{ ingredient.protein }} g <br />
-                            <strong>Carbs per unit:</strong> {{ ingredient.carbs }} g <br />
-                            <strong>Fat per unit:</strong> {{ ingredient.fat }} g
-                        </p>
-                        <a href="{% url 'update_ingredient' ingredient.id %}" class="btn btn-primary">Edit</a>
-                        <form action="{% url 'delete_ingredient' ingredient.id %}" method="post" class="d-inline">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="single-small-receipe-area ingredient-card d-flex flex-column"> <!-- Add class for rounded border -->
+                    <div class="icon-container"> <!-- Icon container in the top right -->
+                        <a href="{% url 'update_ingredient' ingredient.id %}" title="Edit">
+                            <i class="fa fa-edit"></i> <!-- Edit icon -->
+                        </a>
+                        <form action="{% url 'ingredient_delete' ingredient.id %}" method="POST" style="display:inline;" id="delete-form-{{ ingredient.id }}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-link text-danger" onclick="confirmDelete({{ ingredient.id }})" title="Delete">
+                                <i class="fa fa-trash"></i> <!-- Delete icon -->
+                            </button>
                         </form>
                     </div>
+                    <div class="receipe-thumb image-wrapper">
+                        <img src="{{ ingredient.image.url }}" alt="{{ ingredient.name }}">
+                    </div>
+                    <div class="receipe-content"> <!-- Center the text content -->
+                        <a href="{% url 'ingredient_detail' ingredient.id %}">  
+                            <h5>{{ ingredient.name|capfirst }}</h5>
+                        </a>                    </div>
                 </div>
             </div>
             {% empty %}
             <div class="col-12">
-                <p class="text-center">You have no ingredients yet. <a href="{% url 'create_ingredient' %}">Add one now!</a></p>
+                <p class="text-center">No ingredients available. <a href="#">Add one now!</a></p>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
+
+<script>
+    function confirmDelete(ingredientId) {
+        const confirmation = confirm("Are you sure you want to delete this ingredient?");
+        if (confirmation) {
+            document.getElementById(`delete-form-${ingredientId}`).submit();
+        }
+    }
+</script>
+
 {% endblock %}

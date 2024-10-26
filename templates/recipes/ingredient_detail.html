@@ -1,0 +1,40 @@
+{% extends 'recipes/diet_template.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="receipe-post-area section-padding-80">
+   
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>----- {{ ingredient.name|capfirst }} -----</h2>
+                <div class="receipe-slider owl-carousel">
+                    <img src="{{ ingredient.image.url }}" alt="{{ ingredient.name }}" style="max-width: 280px; height: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="receipe-content-area">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-12 col-md-8">
+                    <div class="receipe-headline my-5">
+                        <span>{{ ingredient.created_at|date:"F d, Y" }}</span>
+                        <h2>{{ recipe.name }}</h2>
+                        <div class="receipe-duration">
+                            <h6>Calories: {{ ingredient.calories }} kcal</h6>
+                            <h6>Protein: {{ ingredient.protein }} g</h6>
+                            <h6>Carbs: {{ ingredient.carbs }} g</h6>
+                            <h6>Fat: {{ ingredient.fat }} g</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+</div>
+{% endblock %}

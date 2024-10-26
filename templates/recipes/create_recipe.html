@@ -2,6 +2,7 @@
 
 {% block content %}
 <style>
+    /* Existing CSS */
     body {
         font-family: Arial, sans-serif;
         background-color: #f8f9fa;
@@ -62,17 +63,16 @@
         flex-direction: column;
     }
     .remove-btn {
-        background-color: #dc3545; /* Bootstrap danger color */
+        background-color: #dc3545;
         margin-left: 10px;
     }
 </style>
 
 <div class="form-container">
     <h1>Create New Recipe</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
-            <!-- Left half for Recipe Information -->
             <div class="col-md-4">
                 <input type="text" id="name" name="name" class="custom-input" placeholder="Recipe Name" required />
                 <textarea name="description" class="custom-textarea" placeholder="Recipe Description"></textarea>
@@ -92,9 +92,10 @@
                     <option value="keto">Keto</option>
                     <option value="low_carb">Low Carb</option>
                 </select>
+
+                <input type="file" name="image_url" class="custom-input" accept="image/*" required />
             </div>
 
-            <!-- Right half for Ingredients -->
             <div class="col-md-4">
                 <div class="ingredients-container" id="ingredients-container">
                     <div class="row ingredient-entry">

@@ -7,6 +7,9 @@ class Ingredient(models.Model):
     protein = models.FloatField()
     carbs = models.FloatField()
     fat = models.FloatField()
+    image = models.ImageField(upload_to='ingredients/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.name
@@ -32,6 +35,8 @@ class Recipe(models.Model):
         ('low_carb', 'Low Carb'),
     ], default='main_course') 
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
+
     def __str__(self):
         return self.name
 
@@ -64,4 +69,4 @@ class RecipeIngredient(models.Model):
     unit = models.CharField(max_length=10, choices=UNITS)
 
     def __str__(self):
-        return f'{self.quantity} {self.unit} of {self.ingredient.name} in {self.recipe.name}'
+        return f'{self.quantity} {self.unit} of {self.ingredient.name}'
