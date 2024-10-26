@@ -7,13 +7,13 @@
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="goal__form">
-                    <h2 class="text-center mb-4">Supprimer l'objectif</h2>
-                    <p class="text-center">Es-tu sûr de vouloir supprimer cet objectif : <strong>{{ goal.goal_type }} (Cible: {{ goal.target_value }})</strong> ?</p>
+                    <h2 class="text-center mb-4">  Delete goal</h2>
+                    <p class="text-center">Are you sure you want to delete this objective: <strong>{{ goal.goal_type }} (Cible: {{ goal.target_value }})</strong> ?</p>
                     <form action="{% url 'goal_delete' goal.id %}" method="POST">
                         {% csrf_token %}
                         <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                            <a href="{% url 'goal_list' %}" class="btn btn-secondary ml-3">Annuler</a>
+                            <button type="submit" class="btn btn-danger"> DELETE</button>
+                            <a href="{% url 'goal_list' %}" class="btn btn-secondary ml-3"> Cancel</a>
                         </div>
                     </form>
                 </div>

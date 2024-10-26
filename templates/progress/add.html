@@ -7,29 +7,29 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="class__form">
-                    <h2 class="text-center mb-4">Ajouter un Progrès</h2>
+                    <h2 class="text-center mb-4"> Add Progress</h2>
                     <form action="{% url 'progress_add' %}" method="POST">
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="goal_id">Objectif</label>
                             <select id="goal_id" name="goal_id" required class="form-control">
-                                <option value="">Sélectionnez un Objectif</option>  <!-- Option vide pour le choix -->
+                                <option value=""> Select a Goal</option>  <!-- Option vide pour le choix -->
                                 {% for goal in goals %}
                                     <option value="{{ goal.id }}">{{ goal.title }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="progress_date">Date de Progrès</label>
+                            <label for="progress_date"> Progress Date</label>
                             <input type="date" id="progress_date" name="progress_date" required class="form-control">
                         </div>
                         <div class="form-group">
                             <label for="value">Valeur</label>
                             <input type="text" id="value" name="value" step="0.01" required class="form-control">
                         </div>
-                        <button type="submit" class="primary-btn mt-3">Ajouter le Progrès</button>
+                        <button type="submit" class="primary-btn mt-3">Add Progress</button>
                     </form>
-                    <a href="{% url 'progress_list' %}" class="btn btn-link mt-3">Retour à la Liste des Progrès</a>
+                    <a href="{% url 'progress_list' %}" class="btn btn-link mt-3">Return to Progress List</a>
                 </div>
             </div>
         </div>

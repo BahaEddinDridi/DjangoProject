@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="progress__form">
-                    <h2 class="text-center mb-4">Modifier le progrès</h2>
+                    <h2 class="text-center mb-4"> Edit progress</h2>
                     <form action="{% url 'progress_edit' progress.id %}" method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="_method" value="PUT">
@@ -24,19 +24,19 @@
 
                         <!-- Date de progrès -->
                         <div class="form-group">
-                            <label for="progress_date">Date de progrès</label>
+                            <label for="progress_date">  Progress date</label>
                             <input type="date" id="progress_date" name="progress_date" value="{{ progress.progress_date|date:'Y-m-d' }}" required class="form-control">
                         </div>
 
                         <!-- Valeur de progrès -->
                         <div class="form-group">
-                            <label for="value">Valeur de progrès</label>
+                            <label for="value">Progress value</label>
                             <input type="text" id="value" name="value" value="{{ progress.value }}" required class="form-control">
                         </div>
 
-                        <button type="submit" class="primary-btn mt-3">Modifier le progrès</button>
+                        <button type="submit" class="primary-btn mt-3">Edit progress</button>
                     </form>
-                    <a href="{% url 'progress_list' %}" class="btn btn-link mt-3">Retour à la liste des progrès</a>
+                    <a href="{% url 'progress_list' %}" class="btn btn-link mt-3">Return to progress list</a>
                 </div>
             </div>
         </div>
