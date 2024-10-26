@@ -65,27 +65,32 @@
 </style>
 
 <div class="form-container">
-    <h1>Create New Ingredient</h1>
+    <h1>Update Ingredient</h1>
     
     <!-- Standard Ingredient Form -->
-    <form method="POST" id="standard-ingredient-form" enctype="multipart/form-data">
+    <form method="POST" id="update-ingredient-form" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="text" id="name" name="name" class="custom-input" placeholder="Ingredient Name" required />
-        <input type="number" step="any" name="calories" class="custom-input" placeholder="Calories" required />
-        <input type="number" step="any" name="protein" class="custom-input" placeholder="Protein (g)" required />
-        <input type="number" step="any" name="carbs" class="custom-input" placeholder="Carbohydrates (g)" required />
-        <input type="number" step="any" name="fat" class="custom-input" placeholder="Fat (g)" required />
-        <input type="file" name="image" class="custom-input" accept="image/*" required />
-        <button type="submit" class="btn">Create Ingredient</button>
-    </form>
-    
-    <div class="divider">Or</div>
+        
+        <label for="name">Ingredient Name</label>
+        <input type="text" id="name" name="name" class="custom-input" placeholder="Ingredient Name" value="{{ ingredient.name }}" required />
 
-    <!-- Image Upload Form -->
-    <form method="POST" action="{% url 'add_ingredient_from_image' %}" enctype="multipart/form-data" id="image-upload-form">
-        {% csrf_token %}
-        <input type="file" name="image" class="custom-input" accept="image/*" required />
-        <button type="submit" class="btn">Add Ingredient from Image</button>
+        <label for="calories">Calories</label>
+        <input type="number" step="any" id="calories" name="calories" class="custom-input" placeholder="Calories" value="{{ ingredient.calories }}" required />
+
+        <label for="protein">Protein (g)</label>
+        <input type="number" step="any" id="protein" name="protein" class="custom-input" placeholder="Protein (g)" value="{{ ingredient.protein }}" required />
+
+        <label for="carbs">Carbohydrates (g)</label>
+        <input type="number" step="any" id="carbs" name="carbs" class="custom-input" placeholder="Carbohydrates (g)" value="{{ ingredient.carbs }}" required />
+
+        <label for="fat">Fat (g)</label>
+        <input type="number" step="any" id="fat" name="fat" class="custom-input" placeholder="Fat (g)" value="{{ ingredient.fat }}" required />
+
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image" class="custom-input" accept="image/*" />
+        <small class="form-text text-muted">Leave blank to keep the current image.</small>
+        
+        <button type="submit" class="btn">Update Ingredient</button>
     </form>
 </div>
 
