@@ -165,7 +165,7 @@ def recipe_delete(request, id):
     recipe = get_object_or_404(Recipe, id=id)
     if request.method == 'POST':
         recipe.delete()
-        return redirect('recipes/recipe_list.html')  
+        return redirect('recipe_list')  
     return render(request, 'recipes/recipe_list.html', {'recipe': recipe})
 
 @login_required

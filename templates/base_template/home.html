@@ -24,53 +24,182 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style>
+      /* Custom CSS for styling */
+      body {
+        font-family: 'DM Sans', sans-serif;
+      }
+    
+      .custom-header-top {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        padding: 0; /* Remove padding */
+        display: flex;
+        align-items: center; /* Centers content vertically */
+        height: 100px; /* Increase the height for the top header */
+      }
+    
+      .header__logo img {
+        width: 140px; /* Adjust logo size */
+        height: auto;
+        max-height: 100px; /* Ensure logo does not exceed header height */
+      }
+    
+      .header__top__widget {
+        margin: 0; /* Remove margin */
+      }
+    
+      .header__top__widget span {
+        font-size: 1.4em; /* Adjust font size */
+        color: #0056b3;
+        font-weight: 500;
+        margin: 0;
+      }
+    
+      .header__top__widget .welcome-message {
+        font-size: 0.8em; /* Adjust for balance */
+        color: #0d47a1;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+    
+      .custom-header-nav {
+        background-color: #0d47a1;
+        padding: 10px; /* Remove padding */
+        height: 50px; /* Increase the height for the navigation */
+      }
+    
+      .header__menu ul {
+        display: flex;
+        gap: 15px; /* Reduce gap between menu items */
+        height: 100%; /* Ensure menu fills the height of the navbar */
+        align-items: center; /* Center items vertically */
+        margin: 0; /* Remove margin */
+      }
+    
+      .header__menu ul li {
+        height: 100%; /* Ensure list items fill the height */
+      }
+    
+      .header__menu ul li a {
+        color: white;
+        font-size: 0.9em; /* Adjust font size */
+        padding: 10px; /* Adjust padding to balance the height */
+        text-transform: uppercase;
+        transition: color 0.3s ease, background 0.3s ease;
+        border-radius: 5px;
+        display: flex; /* Flex to center text */
+        align-items: center; /* Center text vertically */
+      }
+    
+      .header__menu ul li a:hover {
+        background-color: #ffffff33;
+        color: #fff;
+      }
+    
+      .header__social {
+        height: 100%; /* Ensure social icons fill the height */
+        display: flex;
+        align-items: center; /* Center icons vertically */
+      }
+    
+      .header__social a {
+        color: #ffffffb3;
+        font-size: 1em; /* Adjust font size */
+        margin-left: 10px;
+        transition: color 0.3s ease;
+      }
+    
+      .header__social a:hover {
+        color: #ffeb3b;
+      }
+    
+      /* Button styles */
+      .btn-primary,
+      .btn-secondary,
+      .btn-danger {
+        border-radius: 20px;
+        padding: 4px 10px; /* Reduce button padding */
+        font-weight: 600;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-size: 0.9em; /* Adjust button font size */
+      }
+    
+      .btn-primary:hover {
+      background-color: #64B5F6; /* Lighter blue that complements sky blue */
+      color: #fff; /* White text for contrast */
+      }
+  
+      .btn-secondary:hover {
+      background-color: #B0BEC5; /* A soft gray to maintain sophistication */
+      color: #fff; /* White text for better readability */
+      }
+  
+      .btn-danger:hover {
+        background-color: #b71c1c;
+        color: #fff;
+      }
+    
+      /* Logo Container */
+      .header__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%; /* Ensure logo fills the height */
+      }
+    </style>
   </head>
   <body>
     <!-- Navbar Section -->
-    <header class="header">
-      <div class="header__top">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-3 col-md-3">
+    <header class="header custom-header">
+      <div class="header__top custom-header-top">
+        <div class="container custom-container">
+          <div class="row align-items-center">
+            <div class="col-lg-3 col-md-3 d-flex justify-content-center">
               <div class="header__logo">
-                <a href="{% static './index.html'%}"
-                  ><img src="{% static 'img/logo.png'%}" alt=""
-                /></a>
+                <a href="{% url 'home' %}">
+                  <img src="{% static 'img/LogoNoBg.png' %}" alt="Hestia logo" />
+                </a>
               </div>
             </div>
-            <div class="col-lg-9 col-md-9">
+            <div class="col-lg-6 col-md-6 text-center">
               <div class="header__top__widget">
-                <ul>
-                  <li>CALL US: + 1 800-567-8990</li>
-                  <li>WRITE US: OFFICE@EXAMPLE.COM</li>
-                  <li>OPENING TIMES: MON - FRI: 9:00 - 19:00</li>
-                </ul>
-                <a href="#" class="primary-btn">JOIN US</a>
                 {% if user.is_authenticated %}
-                <p>Welcome, {{ user.username }}!</p>
+                  <span>Welcome back, <span class="welcome-message">{{ user.username }}</span>!</span>
+                {% else %}
+                  <span>Reach Your Fitness Goals with Hestia!</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 text-end">
+              <div class="header__top__widget">
+                {% if user.is_authenticated %}
+                  <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Logout</button>
+                  </form>
+                {% else %}
+                  <a href="{% url 'login' %}" class="btn btn-primary">Sign In</a>
+                  <a href="{% url 'signup' %}" class="btn btn-secondary ms-2">Sign Up</a>
                 {% endif %}
               </div>
             </div>
           </div>
-          <div class="canvas__open">
-            <i class="fa fa-bars"></i>
-          </div>
         </div>
       </div>
-      <div class="header__nav">
-        <div class="container">
-          <div class="row">
+      <div class="header__nav custom-header-nav">
+        <div class="container custom-container">
+          <div class="row align-items-center">
             <div class="col-lg-9 col-md-9">
               <nav class="header__menu">
                 <ul>
-                  <li><a href="{% static '../'%}">Home</a></li>
-                  <li><a href="{% static '../recipes' %}">Diet</a></li>
-                  <li><a href="{% static '../exercises'%}">Exercises</a></li>
-                  <li><a href="{% static '../hormones/list'%}">hormones</a></li>
+                  <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'exercise_list' %}">Exercises</a></li>
+                <li><a href="{% url 'recipe_list' %}">Diet</a></li>
+                <li><a href="{% url 'list_hormone_levels' %}">Hormones</a></li>
                 </ul>
               </nav>
             </div>
-            <div class="col-lg-3 col-md-3">
+            <div class="col-lg-3 col-md-3 text-end">
               <div class="header__social">
                 <a href="#"><i class="fa fa-facebook"></i></a>
                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -104,7 +233,7 @@
         <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="footer__about">
-              <img src="{% static 'img/footer-logo.png' %}" alt="" />
+              <img src="{% static 'img/LogoNoBg.png' %}" alt="" style="width: 150px; height: auto; max-height: 140px;"/>
               <ul>
                 <li>
                   <i class="fa fa-clock-o"></i> Mon - Fri: 6:30am - 07:45pm
@@ -157,31 +286,7 @@
             </div>
           </div>
         </div>
-        <div class="footer__copyright">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="footer__copyright__text">
-                <p>
-                  Copyright &copy;
-                  <script>
-                    document.write(new Date().getFullYear());
-                  </script>
-                  All rights reserved | This template is made with
-                  <i class="fa fa-heart" aria-hidden="true"></i> by
-                  <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                </p>
-              </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6">
-              <div class="footer__copyright__social">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
     </section>
 
