@@ -30,5 +30,5 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('', include('fitness.urls')),  # Add this line
-    path('meals/',include('nutrition.urls')),
+    path('events/',include('event.urls')),
 ]

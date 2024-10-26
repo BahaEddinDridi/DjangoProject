@@ -1,0 +1,53 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Ajouter un Événement Sportif</h1>
+    
+    <div class="card shadow-lg p-4">
+        <form method="POST" action="{% url 'create_event' %}">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="titre" class="form-label">Titre de l'événement</label>
+                <input type="text" class="form-control" id="titre" name="titre" placeholder="Nom de l'événement" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="lieu" class="form-label">Lieu</label>
+                <input type="text" class="form-control" id="lieu" name="lieu" placeholder="Lieu de l'événement" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="date_debut" class="form-label">Date de début</label>
+                <input type="date" class="form-control" id="date_debut" name="date_debut" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="date_fin" class="form-label">Date de fin</label>
+                <input type="date" class="form-control" id="date_fin" name="date_fin" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description de l'événement</label>
+                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Description de l'événement" required></textarea>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'list_event' %}" class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i> Annuler
+                </a>
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
