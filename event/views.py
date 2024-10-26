@@ -21,7 +21,7 @@ def create_Event(request):
 
 def list_Event(request):
     events = EvenementSportif.objects.all()  # Récupération des événements depuis la base de données
-    paginator = Paginator(events, 4)  # Pagination : 4 événements par page
+    paginator = Paginator(events, 2)  # Pagination : 4 événements par page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
