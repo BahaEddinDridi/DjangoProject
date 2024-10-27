@@ -75,15 +75,34 @@ def delete_event(request, event_id):
     # Redirect to the event list after deletion
     return redirect('list_event')
 
+import random
+
 def detail_event(request, event_id):
     event = get_object_or_404(EvenementSportif, id=event_id)
+
+    # Define a list of random emotions
+    emotions = [
+        "exciting", 
+        "challenging", 
+        "uplifting", 
+        "thrilling", 
+        "joyful", 
+        "inspiring", 
+        "exhilarating", 
+        "fun", 
+        "intense"
+    ]
+
+    # Randomly select an emotion and append it to the event description
+    random_emotion = random.choice(emotions)
+    modified_description = f"{event.description} This event is very {random_emotion}!"
 
     # Fetch recommendations from the Groq API
     chat_completion = client.chat.completions.create(
         messages=[
             {
                 "role": "user",
-                "content": f"Provide a brief, 3 short sentences of recommended similar events or tips related to '{event.description}'."
+                "content": f"Provide a brief, 3 short sentences of recommended similar events or tips related to '{modified_description}'."  # Use the modified description
             }
         ],
         model="llama-3.1-70b-versatile",
@@ -92,9 +111,8 @@ def detail_event(request, event_id):
     # Get the recommendation text from the response
     recommendations = chat_completion.choices[0].message.content
 
-    # Analyze sentiment of the event description
-    sentiment_output = query({"inputs": event.description})  # Call the sentiment analysis API
-    print(sentiment_output)  # Print the sentiment analysis result
+    # Analyze sentiment of the modified event description
+    sentiment_output = query({"inputs": modified_description})  # Call the sentiment analysis API
 
     # Extract the first sentiment label and its score
     if sentiment_output and isinstance(sentiment_output, list) and sentiment_output:
