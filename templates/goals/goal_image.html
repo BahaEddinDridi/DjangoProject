@@ -1,0 +1,17 @@
+{% extends 'base_template/home.html' %}
+{% block content %}
+<section class="goal-image-section">
+    <div class="container text-center">
+        <h2>{{ goal.title }}</h2>
+        <h4>Goal Type: {{ goal.goal_type }}</h4>
+        {% if image_path %}
+            <img src="{{ image_path }}" alt="Goal Image" class="img-fluid mx-auto d-block" style="width: 50%; max-width: 300px;" />
+        {% elif error %}
+            <p class="text-danger">{{ error }}</p>
+        {% endif %}
+        <div class="mt-4">
+            <a href="{% url 'goal_list' %}" class="btn btn-primary">Back to Goals</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

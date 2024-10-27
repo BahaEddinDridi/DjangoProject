@@ -19,7 +19,8 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
-
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
   # include is imported here
@@ -33,4 +34,4 @@ urlpatterns = [
     path('goals/', include('goals.urls')),
     path('recipes/', include('recipes.urls')),
     path('progress/', include('progress.urls')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
