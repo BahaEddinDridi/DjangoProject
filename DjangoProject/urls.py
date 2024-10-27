@@ -37,4 +37,5 @@ urlpatterns = [
     path('hormones/',include('hormones.urls')),
     path('progress/', include('progress.urls')),
     path('recipes/', include('recipes.urls')),
+    path('events/',include('event.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
