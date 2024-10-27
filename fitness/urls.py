@@ -1,12 +1,14 @@
 from django.urls import path
 from . import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     # Exercise URLs
     path('exercises/', views.exercise_list, name='exercise_list'),
     path('exercises/add/', views.exercise_add, name='exercise_add'),
     path('exercises/edit/<int:exercise_id>/', views.exercise_edit, name='exercise_edit'),
     path('exercises/delete/<int:exercise_id>/', views.exercise_delete, name='exercise_delete'),
+     path('exercise/<int:exercise_id>/', views.exercise_detail, name='exercise_detail'),
 
     # Training Plan URLs
     path('training_plans/', views.training_plan_list, name='training_plan_list'),
@@ -22,3 +24,5 @@ urlpatterns = [
     # Home
     path('', views.home, name='home'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

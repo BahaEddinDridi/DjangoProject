@@ -21,8 +21,6 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf import settings
-from django.conf.urls.static import static
 from . import views
 
   # include is imported here
@@ -39,3 +37,5 @@ urlpatterns = [
     path('recipes/', include('recipes.urls')),
     path('events/',include('event.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

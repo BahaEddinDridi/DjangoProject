@@ -1,54 +1,35 @@
-{% extends 'base_template/home.html' %} {% block content %}
+{% extends 'base_template/home.html' %}
+
+{% block content %}
 <section class="class-details spad">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-12">
-        <div class="class__form">
-          <h2 class="text-center mb-4">Training Plan List</h2>
-          <table class="table table-bordered table-hover">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Date Created</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for plan in plans %}
-              <tr>
-                <td>{{ plan.name }}</td>
-                <td>{{ plan.date_created }}</td>
-                <td>
-                  <a
-                    href="{% url 'exercise_set_add' plan.id %}"
-                    class="btn btn-secondary btn-sm"
-                    >Add Exercise Set</a
-                  >
-                  <a
-                    href="{% url 'training_plan_edit' plan.id %}"
-                    class="btn btn-primary btn-sm"
-                    >Edit</a
-                  >
-                  <a
-                    href="{% url 'training_plan_delete' plan.id %}"
-                    class="btn btn-danger btn-sm"
-                    >Delete</a
-                  >
-                  <a
-                    href="{% url 'training_plan_detail' plan.id %}"
-                    class="btn btn-secondary btn-sm"
-                    >View</a
-                  >
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <div class="text-center mt-4">
-            <a href="{% url 'training_plan_add' %}" class="primary-btn"
-              >Add New Training Plan</a
-            >
+        <div class="text-center mb-4">
+          <h2>Training Plan List</h2>
+        </div>
+        <div class="row">
+          {% for plan in plans %}
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">{{ plan.name }}</h5>
+                <p class="card-text">
+                  <small class="text-muted">Created on: {{ plan.date_created }}</small>
+                </p>
+                <div class="btn-group mt-3" role="group" aria-label="Training Plan Actions">
+                  <a href="{% url 'exercise_set_add' plan.id %}" class="btn btn-outline-secondary btn-sm">Add Exercise Set</a>
+                  <a href="{% url 'training_plan_edit' plan.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
+                  <a href="{% url 'training_plan_delete' plan.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                  <a href="{% url 'training_plan_detail' plan.id %}" class="btn btn-secondary btn-sm">View</a>
+                </div>
+              </div>
+            </div>
           </div>
+          {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+          <a href="{% url 'training_plan_add' %}" class="btn btn-primary">Add New Training Plan</a>
         </div>
       </div>
     </div>
