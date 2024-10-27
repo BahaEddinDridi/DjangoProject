@@ -2,11 +2,8 @@
 
 {% block content %}
 <head>
-    <!-- Chargement de Bootstrap et Font Awesome -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <h1 class="text-center mb-2 mt-4 display-4">Liste des Événements Sportifs</h1>
@@ -24,7 +21,7 @@
             <div class="card shadow-lg h-100 border-0 rounded-4 hover-card">
                 <div class="card-body text-center">
                     <h5 class="card-title text-primary fs-4">{{ event.titre }}</h5>
-                    <p class="card-text text-muted">{{ event.description }}</p> <!-- Ajout de la description ici -->
+                    <p class="card-text text-muted">{{ event.description }}</p>
                     <hr class="my-3">
                     <p class="card-text text-muted"><i class="fa fa-user text-secondary"></i> <strong>Organisé par :</strong> {{ event.organisateur.username }}</p>
                     <p class="card-text text-muted"><i class="fa fa-map-marker-alt text-danger"></i> <strong>Lieu :</strong> {{ event.lieu }}</p>
@@ -32,6 +29,9 @@
                     <div class="d-flex justify-content-center mt-4">
                         <a href="{% url 'update_event' event.id %}" class="btn btn-outline-primary me-2">
                             <i class="fa fa-pencil-alt"></i> Modifier
+                        </a>
+                        <a href="{% url 'detail_event' event.id %}" class="btn btn-outline-info me-2">
+                            <i class="fa fa-info-circle"></i> Détails
                         </a>
                         <form action="{% url 'delete_event' event.id %}" method="POST" onsubmit="return confirmDelete('{{ event.titre }}');">
                             {% csrf_token %}
