@@ -7,8 +7,8 @@
     <meta name="description" content="Directing Template" />
     <meta name="keywords" content="Directing, unica, creative, html" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Zogin | Template</title>
-
+    <title>Hestia Hub</title>
+    <link rel="icon" href="{% static 'img/hestiIcon.png' %}">
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap"
@@ -194,12 +194,12 @@
                 <ul>
                   <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'exercise_list' %}">Exercises</a></li>
+                <li><a href="{% static '../training_plans'%}">Plans</a></li>
                 <li><a href="{% url 'recipe_list' %}">Diet</a></li>
                 <li><a href="{% url 'list_hormone_levels' %}">Hormones</a></li>
                   <li><a href="{% static '../goals'%}">Goals</a></li>
                   <li><a href="{% static '../progress'%}">Progresses</a></li>
                   <li><a href="{% static '../events/list'%}">Events</a></li>
-                  <li><a href="{% static '../training_plans'%}">Training Plans</a></li>
                 </ul>
               </nav>
             </div> 
