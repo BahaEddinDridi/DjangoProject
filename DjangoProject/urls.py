@@ -21,6 +21,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
   # include is imported here
@@ -30,7 +32,8 @@ urlpatterns = [
      path('login/', LoginView.as_view(), name='login'),
     path('signup/', views.signup, name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('', include('fitness.urls',)),  # Add this line
+    path('', include('fitness.urls',)),
+    path('goals/', include('goals.urls')),
     path('hormones/',include('hormones.urls')),
     
     path('recipes/', include('recipes.urls')),

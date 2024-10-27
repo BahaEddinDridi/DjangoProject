@@ -1,0 +1,47 @@
+{% extends 'base_template/home.html' %}
+
+{% block content %}
+<!-- Add Goal Section -->
+<section class="class-details spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="class__form">
+                    <h2 class="text-center mb-4">Add New Goal</h2>
+                    <form action="{% url 'goal_add' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="title">Title Goal</label>
+                            <input type="text" id="title" name="title" required class="form-control">
+                        </div>                        
+                        <div class="form-group">
+                            <label for="goal_type">Goal Type</label>
+                            <select id="goal_type" name="goal_type" required class="form-control">
+                                <option value="">Select Goal Type</option>  <!-- Option vide pour le choix -->
+                                <option value="perte de poids">   Weight Loss</option>
+                                <option value="gain musculaire">Muscle Gain</option>
+                                <option value="amelioration de la performance">Performance Improvement</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="target_value">Target Value</label>
+                            <input type="number" id="target_value" name="target_value" step="0.01" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="start_date">Start Date</label>
+                            <input type="date" id="start_date" name="start_date" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">End Date</label>
+                            <input type="date" id="end_date" name="end_date" required class="form-control">
+                        </div>
+                        <button type="submit" class="primary-btn mt-3">Add Goal</button>
+    
+                    </form>
+                    <a href="{% url 'goal_list' %}" class="btn btn-link mt-3">Back to Goal List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

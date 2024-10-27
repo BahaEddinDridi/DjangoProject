@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-rjqa^i(0j-85uum=a^-ls=pq%xyd=fn)41fdob+6tide^e1wc1
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Application definition
 
@@ -38,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fitness',
+    'goals',
     'recipes',
     'hormones',
+    'progress',
 ]
 
 MIDDLEWARE = [
