@@ -1513,27 +1513,27 @@ textarea:focus {
 
 .contact-form-area {
     .form-control {
-        height: 52px; // Sets the height for both input types
+        height: 52px; 
         width: 100%;
-        background-color: $bg-gray; // Ensure you have $bg-gray defined
+        background-color: $bg-gray; 
         font-size: 12px;
         font-style: italic;
         margin-bottom: 15px;
         border: none;
-        border-left: 3px solid $bg-gray; // Ensure you have $bg-gray defined
+        border-left: 3px solid $bg-gray;
         border-radius: 0;
-        padding: 15px 30px; // Consistent padding for all inputs
-        @include trans-duration(500ms); // Include your transition mixin
+        padding: 15px 30px;
+        @include trans-duration(500ms);
         &:focus {
-            border-left: 3px solid $hover-color; // Ensure you have $hover-color defined
+            border-left: 3px solid $hover-color;
             box-shadow: none;
         }
     }
 
-    // Ensure the same styles apply for select inputs
+    
     select.form-control {
-        height: 52px; // Match height with input fields
-        padding: 15px 30px; // Ensure padding is consistent
+        height: 52px;
+        padding: 15px 30px;
     }
 
     textarea.form-control {

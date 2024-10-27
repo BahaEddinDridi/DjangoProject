@@ -6,12 +6,13 @@ from .views import (
 )
 
 urlpatterns = [
+    # Ingredients URLs
     path('ingredients/', ingredient_list, name='ingredient-list'),
     path('ingredients/new/', add_ingredient, name='add_ingredient'),
     path('ingredients/update/<int:id>/', update_ingredient, name='update_ingredient'),
     path('ingredients/delete/<int:id>/', ingredient_delete, name='ingredient_delete'),
     path('ingredients/<int:pk>/', ingredient_detail, name='ingredient_detail'),
-        # Recipe URLs
+    # Recipe URLs
     path('add-recipe/', views.add_recipe, name='add_recipe'),
     path('', recipe_list, name='recipe_list'),
     path('my_recipes/', user_recipe_list, name='my_recipe'),
