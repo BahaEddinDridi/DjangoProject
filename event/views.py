@@ -8,7 +8,7 @@ import requests  # Import requests for API calls
 # Initialize the Groq client with your API key
 client = Groq(api_key="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")
 API_URL = "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer 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"}
 
 def query(payload):
     """Function to query the Hugging Face sentiment analysis API."""
@@ -113,7 +113,7 @@ def detail_event(request, event_id):
 
     # Analyze sentiment of the modified event description
     sentiment_output = query({"inputs": modified_description})  # Call the sentiment analysis API
-
+    print("sentiment_output",sentiment_output)
     # Extract the first sentiment label and its score
     if sentiment_output and isinstance(sentiment_output, list) and sentiment_output:
         first_sentiment = sentiment_output[0][0]  # Accessing the first result

@@ -18,7 +18,7 @@ client = Groq(api_key="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"
 
 # Hugging Face API URL and headers
 API_URL = "https://api-inference.huggingface.co/models/stable-diffusion-v1-5/stable-diffusion-v1-5"
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer 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"}
 
 # Function to send request to the Hugging Face API with retry logic
 def query(payload):
